@@ -1,0 +1,66 @@
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/main-background-4.png" alt="" />
+  </view>
+  <view class="container">
+    <nav></nav>
+    <view class="card-container base-data-container" bind:tap="onBaseDataBoxTap">
+      <view class="card-title-container">
+        <text class="card-title">基础数据</text>
+        <image class="card-title-arrow" src="/assets/img/right-arrow.svg" mode="" />
+      </view>
+      <view class="base-data-cards-container">
+        <view class="base-data-card">
+          <view class="base-data">
+            <text class="base-data-num">{{userInfo.height}}</text>
+            <text class="base-data-unit">cm</text>
+          </view>
+          <text class="base-data-label">身高</text>
+        </view>
+        <view class="base-data-card">
+          <view class="base-data">
+            <text class="base-data-num">{{userInfo.weight}}</text>
+            <text class="base-data-unit">kg</text>
+          </view>
+          <text class="base-data-label">体重</text>
+        </view>
+        <view class="base-data-card">
+          <view class="base-data">
+            <text class="base-data-num">{{userInfo.age}}</text>
+            <text class="base-data-unit">岁</text>
+          </view>
+          <text class="base-data-label">年龄</text>
+        </view>
+      </view>
+    </view>
+    <view class="card-container emotion-data-container">
+      <view class="card-title-container">
+        <text class="card-title">情绪状态</text>
+        <picker mode="date" value="{{currentDate}}" bindchange="onDateChange">
+          <view class="date-picker-btn">
+            <text>{{currentDate}}</text>
+            <image class="picker-arrow" src="/assets/img/right-arrow.svg" />
+          </view>
+        </picker>
+      </view>
+      <view class="emotion-data-content">
+        <ec-canvas id="mychart" canvas-id="mychart" ec="{{ ec }}"></ec-canvas>
+      </view>
+    </view>
+    <view class="card-container medicine-data-container">
+      <view class="card-title-container">
+        <text class="card-title">用药情况</text>
+      </view>
+      <block wx:if="{{medicineData.hasPlan}}"></block>
+      <block wx:else>
+        <view class="no-medicint-data-container">
+          <text>暂无用药计划，</text>
+          <navigator url="/pages/care/care" class="link" hover-class="hover">去添加</navigator>
+        </view>
+      </block>
+    </view>
+    <view class="bottom-hint">
+      <text class="bottom-hint-text">没有更多内容啦~</text>
+    </view>
+  </view>
+</scroll-view>

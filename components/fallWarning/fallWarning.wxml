@@ -1,0 +1,24 @@
+<view class="fall-warning-mask" wx:if="{{show}}" catchtouchmove="preventTouchMove">
+  <view class="fall-warning-container">
+    <!-- Background Image -->
+    <image class="background-image" src="/assets/img/fall-warning-background.svg"></image>
+    
+    <!-- Warning Icon -->
+    <image class="warning-icon" src="/assets/img/fall-warning-icon.svg"></image>
+
+    <view class="content">
+      <view class="header">
+        <view class="title">警告</view>
+        <view class="subtitle">疑似摔倒受伤迹象</view>
+      </view>
+
+      <view class="button-group">
+        <view class="btn primary-btn" bindtap="onOneKeyAlarm">一键报警</view>
+        <view class="btn primary-btn" bindtap="onCallRescue">呼叫救援</view>
+        <view class="btn secondary-btn" bindtap="onCloseAlarm">关闭警报</view>
+      </view>
+
+      <view class="timer">状况已发生{{timerText}}</view>
+    </view>
+  </view>
+</view>

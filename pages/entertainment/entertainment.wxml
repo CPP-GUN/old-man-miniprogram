@@ -1,0 +1,128 @@
+<view class="background-container">
+  <image class="background-img" src="/assets/img/main-background.png" alt="" />
+  <view class="background-overlay"></view> <!-- Gradient overlay for better text contrast -->
+</view>
+
+<view class="nav" style="width: {{navRight}}px;">
+  <view class="status-bar-placeholder" style="height:calc({{statusBarHeight}}px);"></view>
+  <view class="nav-content-container" style="height:calc({{navBarHeight}}px)">
+    <view class="nav-icon-container" bind:tap="onBackBtnTap" hover-class="hover">
+      <image class="nav-icon" src="/assets/img/left-arrow.svg" mode="" />
+    </view>
+    <view class="nav-title-container">
+      <text>音乐空间</text>
+    </view>
+  </view>
+</view>
+
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- Playlist Header Info -->
+    <view class="playlist-header-card">
+        <view class="playlist-cover-box">
+            <image class="playlist-cover" src="{{playlistInfo.cover}}" mode="aspectFill"></image>
+        </view>
+        <view class="playlist-info">
+            <text class="playlist-title">{{playlistInfo.title}}</text>
+            <text class="playlist-desc">{{playlistInfo.desc}}</text>
+            <text class="song-count">{{playlistInfo.count}} 首歌曲</text>
+            <view class="playlist-meta">
+                <view class="action-buttons">
+                    <view class="play-all-btn" bindtap="playNext">
+                        <image class="play-all-icon" src="/assets/img/play.svg" mode="aspectFit"></image>
+                        <text>播放全部</text>
+                    </view>
+                    <view class="upload-btn" bindtap="onUploadTap">
+                        <image class="upload-icon" src="/assets/img/upload.svg" mode="aspectFit"></image> <!-- Reusing more icon as upload/plus placeholder -->
+                        <text>上传</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- Song List -->
+    <view class="song-list-container">
+      <block wx:for="{{songList}}" wx:key="id">
+        <view class="song-item {{currentSong.id === item.id ? 'active' : ''}}" bindtap="playSong" data-song="{{item}}" hover-class="hover">
+          <view class="song-cover-wrapper">
+             <image class="song-cover" src="{{item.cover}}" mode="aspectFill"></image>
+             <!-- Active Indicator (Equalizer) -->
+             <view class="active-indicator" wx:if="{{currentSong.id === item.id && isPlaying}}">
+                <view class="bar bar-1"></view>
+                <view class="bar bar-2"></view>
+                <view class="bar bar-3"></view>
+                <view class="bar bar-4"></view>
+             </view>
+             <view class="play-icon-overlay" wx:elif="{{currentSong.id !== item.id}}">
+                <image class="small-play-icon" src="/assets/img/play.svg"></image>
+             </view>
+          </view>
+          
+          <view class="song-details">
+            <text class="song-name {{currentSong.id === item.id ? 'highlight' : ''}}">{{item.name}}</text>
+            <text class="song-artist">{{item.artist}}</text>
+          </view>
+          
+          <view class="song-right">
+             <text class="song-duration">{{item.duration}}</text>
+             <view class="more-btn">
+                <view class="dot"></view>
+                <view class="dot"></view>
+             </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="bottom-placeholder"></view>
+  </view>
+</scroll-view>
+
+<!-- Fixed Player Control (Dynamic Island Style) -->
+<view class="player-control-bar {{isPlaying ? 'playing' : ''}}" wx:if="{{currentSong}}">
+  <!-- Progress Border Container -->
+  <view class="player-avatar-container">
+    <view class="progress-ring" style="background: conic-gradient(var(--main-color) {{playProgress}}%, #f0f0f0 {{playProgress}}%);">
+       <view class="avatar-inner">
+          <image class="player-avatar {{isPlaying ? 'rotating' : ''}}" src="{{currentSong.cover}}" mode="aspectFill"></image>
+       </view>
+    </view>
+  </view>
+  
+  <view class="player-text-info">
+    <text class="player-title">{{currentSong.name}}</text>
+    <text class="player-sub">{{currentSong.artist}}</text>
+  </view>
+  
+  <view class="player-controls">
+    <view class="p-btn" catchtap="togglePlay">
+      <image class="p-icon" src="{{isPlaying ? '/assets/img/pause.svg' : '/assets/img/play.svg'}}" mode="aspectFit"></image>
+    </view>
+    <view class="p-btn" catchtap="playNext">
+      <image class="p-icon" src="/assets/img/next.svg" mode="aspectFit"></image>
+    </view>
+  </view>
+</view>
+
+<!-- Upload Modal -->
+<view class="modal-mask" wx:if="{{showUploadModal}}">
+  <view class="modal-container">
+    <view class="modal-header">
+      <text class="modal-title">上传歌曲信息</text>
+    </view>
+    <view class="modal-content">
+      <view class="input-group">
+        <text class="input-label">歌曲名称</text>
+        <input class="modal-input" placeholder="请输入歌曲名称" value="{{uploadForm.name}}" bindinput="onUploadNameInput" />
+      </view>
+      <view class="input-group">
+        <text class="input-label">歌手/艺术家</text>
+        <input class="modal-input" placeholder="请输入歌手姓名" value="{{uploadForm.artist}}" bindinput="onUploadArtistInput" />
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="modal-btn cancel-btn" bindtap="onCancelUpload">取消</view>
+      <view class="modal-btn confirm-btn" bindtap="onConfirmUpload">确认添加</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "fall-warning": "/components/fallWarning/fallWarning"
+  }
+}

@@ -1,0 +1,40 @@
+.autoPadding {
+  padding-left: 40rpx;
+}
+
+.nav-icons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25rpx;
+  justify-content: flex-start;
+}
+
+.nav-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.icon{
+  position: relative;
+  transition: all .3s;
+  border-radius: 8px;
+  padding: 0 5rpx;
+}
+
+.icon.hover {
+  background-color: #00000014;
+}
+
+.message-num {
+  position: absolute;
+  background-color: var(--orange-color);
+  border-radius: 100px;
+  right: 0;
+  top: 0;
+  font-size: 8px;
+  padding: 1px 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,251 @@
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/main-background-user.png" alt="" />
+  </view>
+  <view class="container">
+    <nav autoPadding="{{false}}"></nav>
+    <view class="card-container base-info-container">
+      <view class="avatar-container">
+        <image class="avatar-image" src="/assets/img/avatar.png" mode="" />
+      </view>
+      <view class="info-container">
+        <view class="info-name-container">
+          <text class="info-name">{{userData.username}}</text>
+          <view class="change-account-btn-container" hover-class="hover" bind:tap="onChangeBtnTap">
+            <image class="change-icon" src="/assets/img/change-icon.svg" mode="" />
+            <text class="change-icon-text">切换账号</text>
+          </view>
+        </view>
+        <view class="info-content">
+          <view class="info-content-item info-label">
+            <text>手机号</text>
+            <text>身份证号</text>
+          </view>
+          <view class="info-content-item info-value">
+            <text>{{userData.phone}}</text>
+            <text>{{userData.idNum}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <image class="status-image" src="/assets/img/status.svg" mode="aspectFit" bind:tap="onStatusImageTap" />
+    <view class="card-container health-container">
+      <view class="card-title-container">
+        <text class="card-title">健康信息卡</text>
+      </view>
+      <view class="health-list">
+        <view class="health-col health-label-container">
+          <text class="health-list-item health-label">姓名</text>
+          <text class="health-list-item health-label">年龄/岁</text>
+          <text class="health-list-item health-label">身高/cm</text>
+          <text class="health-list-item health-label">体重/kg</text>
+          <text class="health-list-item health-label">身份证号</text>
+          <text class="health-list-item health-label">居住地址</text>
+        </view>
+        <view class="health-col health-value-container">
+          <text class="health-list-item health-value">{{userData.oldmanName}}</text>
+          <text class="health-list-item health-value">{{userData.oldmanAge}}</text>
+          <text class="health-list-item health-value">{{userData.oldmanHeight}}</text>
+          <text class="health-list-item health-value">{{userData.oldmanWeight}}</text>
+          <text class="health-list-item health-value">{{userData.oldmanIdNum}}</text>
+          <text class="health-list-item health-value">{{userData.oldmanAddress}}</text>
+        </view>
+      </view>
+      <view class="health-btn-container">
+       <view class="health-btn" hover-class="hover" bind:tap="onMedicalHistoryBtnTap">既往病史</view>
+      </view>
+    </view>
+    <view class="card-container setting-container">
+      <view class="setting-list">
+        <view class="setting-item" hover-class="hover" bind:tap="onScheduleBtnTap">
+          <view class="setting-item-content">
+            <image class="setting-icon" src="/assets/img/schedule-icon.svg" mode="" />
+            <text>日程管理</text>
+          </view>
+          <image class="setting-arrow" src="/assets/img/right-arrow.svg" mode="" />
+        </view>
+        <view class="setting-item" hover-class="hover" bind:tap="onWarningBtnTap">
+          <view class="setting-item-content">
+            <image class="setting-icon" src="/assets/img/warning-icon.svg" mode="" />
+            <text>预警设置</text>
+          </view>
+          <image class="setting-arrow" src="/assets/img/right-arrow.svg" mode="" />
+        </view>
+        <view class="setting-item" hover-class="hover" bind:tap="onServiceBtnTap">
+          <view class="setting-item-content">
+            <image class="setting-icon" src="/assets/img/service-icon.svg" mode="" />
+            <text>联系客服</text>
+          </view>
+          <image class="setting-arrow" src="/assets/img/right-arrow.svg" mode="" />
+        </view>
+      </view>
+    </view>
+    <view class="bottom-placeholder"></view>
+    <page-container class="page-container" show="{{pageContainerShow}}" overlay="{{true}}" round="{{true}}" bind:clickoverlay="onPageContainerOverlayTap">
+      <view class="changeAccountContainer" wx:if="{{pageContainerContent == 'changeAccount'}}" style="{{containerHeight !== null ? 'height:' + containerHeight + 'px;' : ''}} {{transition ? 'transition:' + transition + ';' : ''}}">
+        <view class="drag-handle-area" catch:touchstart="onDragStart" catch:touchmove="onDragMove" catch:touchend="onDragEnd">
+          <view class="drag-handle"></view>
+        </view>
+        <view class="modal-header">
+          <text class="modal-title">账号管理</text>
+          <text class="modal-subtitle">请选择您要进行的操作</text>
+        </view>
+        
+        <view class="action-list">
+          <view class="action-card primary-card" bind:tap="onSwitchBtnTap" hover-class="card-hover">
+            <view class="card-icon-box">
+              <image class="card-icon" src="/assets/img/change-icon.svg" mode="aspectFit" />
+            </view>
+            <view class="card-content">
+              <text class="card-title">切换账号</text>
+              <text class="card-desc">切换至其它已登录的账号</text>
+            </view>
+            <view class="card-arrow"></view>
+          </view>
+
+          <view class="action-card secondary-card" bind:tap="onLogoutBtnTap" hover-class="card-hover">
+            <view class="card-icon-box">
+              <image class="card-icon" src="/assets/img/avatar.png" mode="aspectFit" />
+            </view>
+            <view class="card-content">
+              <text class="card-title">登录新账号</text>
+              <text class="card-desc">退出当前并登录其它账号</text>
+            </view>
+            <view class="card-arrow"></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="medical-history-container" wx:if="{{pageContainerContent == 'medicalHistory'}}">
+        <view class="modal-header medical-header">
+          <text class="modal-title">既往病史</text>
+        </view>
+        <scroll-view scroll-y class="medical-history-content">
+            <!-- Chronic Diseases -->
+            <view class="medical-box history-box">
+              <view class="history-section">
+                  <view class="section-title">慢性病</view>
+                  <view class="tags-container">
+                      <block wx:for="{{medicalHistory.chronicDiseases}}" wx:key="id">
+                          <view class="tag" bind:tap="onEditHistoryTap" data-type="chronicDiseases" data-id="{{item.id}}" data-index="{{index}}" data-item="{{item.content}}">{{item.content}}</view>
+                      </block>
+                      <view class="tag" bind:tap="onAddHistoryTap" data-type="chronicDiseases">
+                        <image class="medical-plus-icon" src="/assets/img/plus.svg" mode="aspectFit" />
+                      </view>
+                  </view>
+              </view>
+              <!-- Infectious Diseases -->
+              <view class="history-section">
+                  <view class="section-title">传染病</view>
+                  <view class="tags-container">
+                      <block wx:for="{{medicalHistory.infectiousDiseases}}" wx:key="id">
+                          <view class="tag" bind:tap="onEditHistoryTap" data-type="infectiousDiseases" data-id="{{item.id}}" data-index="{{index}}" data-item="{{item.content}}">{{item.content}}</view>
+                      </block>
+                      <view class="tag" bind:tap="onAddHistoryTap" data-type="infectiousDiseases">
+                        <image class="medical-plus-icon" src="/assets/img/plus.svg" mode="aspectFit" />
+                      </view>
+                  </view>
+              </view>
+              <!-- Tumor History -->
+              <view class="history-section">
+                  <view class="section-title">肿瘤史</view>
+                  <view class="tags-container">
+                      <block wx:for="{{medicalHistory.tumorHistory}}" wx:key="id">
+                          <view class="tag" bind:tap="onEditHistoryTap" data-type="tumorHistory" data-id="{{item.id}}" data-index="{{index}}" data-item="{{item.content}}">{{item.content}}</view>
+                      </block>
+                      <view class="tag" bind:tap="onAddHistoryTap" data-type="tumorHistory">
+                        <image class="medical-plus-icon" src="/assets/img/plus.svg" mode="aspectFit" />
+                      </view>
+                  </view>
+              </view>
+              <!-- Major Surgeries -->
+              <view class="history-section">
+                  <view class="section-title">重大手术</view>
+                  <view class="surgery-list">
+                    <block wx:for="{{medicalHistory.majorSurgeries}}" wx:key="id">
+                      <view class="surgery-card" bind:tap="onEditHistoryTap" data-type="majorSurgeries" data-id="{{item.id}}" data-index="{{index}}" data-item="{{item.content}}">
+                        <view class="surgery-row">
+                          <text class="surgery-label">手术时间</text>
+                          <text class="surgery-value">{{item.content.date}}</text>
+                        </view>
+                        <view class="surgery-row">
+                          <text class="surgery-label">手术医院</text>
+                          <text class="surgery-value">{{item.content.hospital}}</text>
+                        </view>
+                        <view class="surgery-row">
+                          <text class="surgery-label">手术原因</text>
+                          <text class="surgery-value">{{item.content.reason}}</text>
+                        </view>
+                        <view class="surgery-row">
+                          <text class="surgery-label">手术类型</text>
+                          <text class="surgery-value">{{item.content.type}}</text>
+                        </view>
+                      </view>
+                    </block>
+                    <view class="surgery-card surgery-card-add" bind:tap="onAddHistoryTap" data-type="majorSurgeries">
+                      <view class="surgery-row">
+                          <text class="surgery-label">添加手术史</text>
+                          <text class="surgery-value">包含手术时间、地点、原因以及手术类型等</text>
+                      </view>
+                    </view>
+                  </view>
+              </view>
+            </view>
+            <!-- Allergies -->
+            <view class="medical-box history-section">
+                <view class="section-title">过敏史</view>
+                <view class="tags-container">
+                  <block wx:for="{{medicalHistory.allergies}}" wx:key="id">
+                      <view class="tag" bind:tap="onEditHistoryTap" data-type="allergies" data-id="{{item.id}}" data-index="{{index}}" data-item="{{item.content}}">{{item.content}}</view>
+                  </block>
+                  <view class="tag" bind:tap="onAddHistoryTap" data-type="allergies">
+                    <image class="medical-plus-icon" src="/assets/img/plus.svg" mode="aspectFit" />
+                  </view>
+                </view>
+            </view>
+            <view class="bottom-placeholder"></view>
+        </scroll-view>
+      </view>
+    </page-container>
+  </view>
+</scroll-view>
+
+<!-- Add History Modal (Center) -->
+<view class="modal-mask" wx:if="{{showAddHistoryModal}}" bindtap="onCancelAddHistory" style="z-index: 2000;">
+  <view class="modal-container" catchtap="preventBubble">
+    <view class="modal-header">
+      <text class="modal-title">{{isEditingHistory ? '编辑' : '添加'}}{{currentHistoryTitle}}{{currentHistoryType == 'tumorHistory' ? '' : '史'}}</text>
+    </view>
+    <view class="modal-content">
+        <block wx:if="{{currentHistoryType == 'majorSurgeries'}}">
+            <view class="input-group">
+                <text class="label">手术时间</text>
+                <input class="input" placeholder="请输入手术时间" value="{{addHistoryForm.date}}" bindinput="onInputHistoryField" data-field="date" />
+            </view>
+            <view class="input-group">
+                <text class="label">手术医院</text>
+                <input class="input" placeholder="请输入手术医院" value="{{addHistoryForm.hospital}}" bindinput="onInputHistoryField" data-field="hospital" />
+            </view>
+            <view class="input-group">
+                <text class="label">手术原因</text>
+                <input class="input" placeholder="请输入手术原因" value="{{addHistoryForm.reason}}" bindinput="onInputHistoryField" data-field="reason" />
+            </view>
+            <view class="input-group">
+                <text class="label">手术类型</text>
+                <input class="input" placeholder="请输入手术类型" value="{{addHistoryForm.type}}" bindinput="onInputHistoryField" data-field="type" />
+            </view>
+        </block>
+        <block wx:else>
+            <view class="input-group">
+                <text class="label">{{currentHistoryTitle}}名称</text>
+                <input class="input" placeholder="请输入{{currentHistoryTitle}}名称" value="{{addHistoryForm.name}}" bindinput="onInputHistoryField" data-field="name" />
+            </view>
+        </block>
+    </view>
+    <view class="modal-footer">
+      <view class="btn delete-btn" wx:if="{{isEditingHistory}}" bindtap="onDeleteHistory">删除</view>
+      <view class="btn cancel-btn" wx:if="{{!isEditingHistory}}" bindtap="onCancelAddHistory">取消</view>
+      <view class="btn save-btn" bindtap="onSaveHistory">保存</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,182 @@
+<scroll-view class="scrollarea" scroll-y="{{true}}">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/main-background.png" alt="" />
+  </view>
+  <view class="container">
+    <nav autoPadding="{{true}}"></nav>
+    <view class="section data-box {{isPressed ? 'pressed' : ''}}" bindtouchstart="onDataBoxPressStart" bindtouchend="onDataBoxPressEnd" bindtouchcancel="onDataBoxPressEnd" bind:tap="onDataBoxTap">
+      <view class="data-box-content">
+        <view class="health-status">
+          <image src="/assets/img/index-health-status-good.svg" mode="" />
+        </view>
+        <view class="health-data">
+          <view class="health-data-item">
+            <text class="health-data-label">好情绪占比</text>
+            <text class="health-data-label">坏情绪占比</text>
+            <text class="health-data-label">情绪水平</text>
+          </view>
+          <view class="health-data-item">
+            <view class="health-data-value">
+              <text class="health-data-text-green">{{emotionGoodRatio || '--'}}%</text>
+            </view>
+            <view class="health-data-value">
+              <text class="health-data-text-green">{{emotionBadRatio || '--'}}%</text>
+            </view>
+            <view class="health-data-value">
+              <text class="health-data-text-yellow">{{emotionScore || '--'}}分</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <scroll-view class="section fast-func-container" scroll-x="{{true}}">
+      <view class="fast-func-list">
+        <view class="fast-func-item" hover-class="fast-func-item-hover" bind:tap="onMessageBtnTap">
+          <image src="/assets/img/fast-msg.svg" mode="" />
+          <text>即时对话</text>
+        </view>
+        <view class="fast-func-item" hover-class="fast-func-item-hover" bind:tap="onDataBoxTap">
+          <image src="/assets/img/fast-health.svg" mode="" />
+          <text>情绪状态</text>
+        </view>
+        <view class="fast-func-item" hover-class="fast-func-item-hover" bind:tap="onWarningBtnTap">
+          <image src="/assets/img/fast-warning.svg" mode="" />
+          <text>警报记录</text>
+        </view>
+        <view class="fast-func-item" hover-class="fast-func-item-hover" bind:tap="onMusicOnDemandTap">
+          <image src="/assets/img/fast-music.svg" mode="" />
+          <text>音乐点播</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="section notice-container" hover-class="hover">
+      <view class="notice-content" bind:tap="onMessageBtnTap">
+        <text class="notice-text" bind:tap="onMessageBtnTap">妈妈：轩轩，记得回家的时候把冰箱里的肉拿出来解冻</text>
+        <view class="muti-notice-hint" bind:tap="onMessageBtnTap">
+          <text>5条未读消息</text>
+        </view>
+      </view>
+      <image class="notice-close-btn" src="/assets/img/close.svg" mode="" />
+    </view>
+    <view class="section schedule-container">
+      <view class="schedule-content">
+        <view class="schedule-title-container" hover-class="hover" bind:tap="onOpenScheduleList">
+          <text class="schedule-title">日程</text>
+          <image class="schedule-title-arrow" src="/assets/img/right-arrow.svg" mode="" />
+        </view>
+        <view class="schedule-list-container">
+          <block wx:if="{{scheduleList.length > 0}}">
+            <view wx:for="{{scheduleList}}" wx:for-item="item" wx:key="index" class="schedule-item {{item.pass ? (item.finish ? 'schedule-finish' : 'schedule-unfinish') : 'schedule-unpass'}}" hover-class="hover" bindtap="onEditSchedule" data-item="{{item}}">
+              <view class="schedule-item-left">
+                <text class="schedule-time">{{item.time}}</text>
+              </view>
+              <view class="schedule-item-middle">
+                <text class="schedule-item-title">{{item.title}}</text>
+                <view class="schedule-tag" wx:if="{{item.isDaily}}">每天</view>
+              </view>
+              <view class="schedule-item-right">
+                <text class="schedule-status">{{item.pass ? (item.finish ? "已完成" : "未完成") : "待完成"}}</text>
+              </view>
+            </view>
+          </block>
+          <view wx:else class="schedule-empty-state">
+             <image class="schedule-empty-img" src="/assets/img/schedule-icon.svg" mode="aspectFit" />
+             <text class="schedule-empty-text">暂无日程安排</text>
+          </view>
+        </view>
+        <view class="create-schedule-btn" hover-class="hover" bind:tap="onAddSchedule">
+          <image class="create-schedule-btn-image" src="/assets/img/plus.svg" mode="" />
+          <text class="create-schedule-btn-text">添加新的日程</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- Schedule List Bottom Sheet -->
+<view class="bottom-sheet-mask {{isClosingScheduleList ? 'closing' : ''}}" wx:if="{{showScheduleListModal}}" bindtap="onCloseScheduleList">
+  <view class="bottom-sheet-container {{isClosingScheduleList ? 'closing' : ''}}" catchtap="preventBubble">
+    <view class="bottom-sheet-header">
+      <text class="bottom-sheet-title">日程管理</text>
+      <view class="close-icon-wrapper" bindtap="onCloseScheduleList">
+        <image class="close-icon" src="/assets/img/close.svg" />
+      </view>
+    </view>
+    <scroll-view class="bottom-sheet-content" scroll-y>
+      <view class="schedule-manage-list">
+        <view wx:for="{{scheduleList}}" wx:for-item="item" wx:key="index" class="manage-item" hover-class="hover" bindtap="onEditSchedule" data-item="{{item}}">
+            <view class="manage-item-left">
+                <view class="manage-item-time">{{item.time}}</view>
+            </view>
+            <view class="manage-item-center">
+                <view class="manage-timeline-dot {{item.finish ? 'finished' : ''}}"></view>
+                <view class="manage-timeline-line"></view>
+            </view>
+            <view class="manage-item-right">
+                <view class="manage-card {{item.finish ? 'finished' : ''}}">
+                  <view class="manage-card-header">
+                    <text class="manage-item-title">{{item.title}}</text>
+                    <view class="manage-tag" wx:if="{{item.isDaily}}">每天</view>
+                  </view>
+                  <view class="manage-card-status">
+                    <text>{{item.finish ? '已完成' : '未完成'}}</text>
+                  </view>
+                </view>
+            </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="bottom-sheet-footer">
+        <view class="add-schedule-btn-large" bindtap="onAddSchedule">
+            <image src="/assets/img/plus.svg" class="add-icon-white"/>
+            <text>新建日程</text>
+        </view>
+    </view>
+  </view>
+</view>
+
+<!-- Schedule Edit/Add Modal (Center) -->
+<view class="modal-mask {{isClosingScheduleModal ? 'closing' : ''}}" wx:if="{{showScheduleModal}}" bindtap="onCloseScheduleModal" style="z-index: 2000;">
+  <view class="modal-container {{isClosingScheduleModal ? 'closing' : ''}}" catchtap="preventBubble">
+    <view class="modal-header">
+      <text class="modal-title">{{isEditing ? '编辑日程' : '新建日程'}}</text>
+    </view>
+    <view class="modal-content">
+      <view class="input-group">
+        <text class="label">日程标题</text>
+        <input class="input" placeholder="请输入日程标题" value="{{editingSchedule.title}}" bindinput="onScheduleTitleInput" />
+      </view>
+      
+      <view class="input-group row-between">
+          <text class="label">提醒时间</text>
+          <picker mode="time" value="{{editingSchedule.time}}" bindchange="onTimeChange">
+              <view class="picker-view">{{editingSchedule.time || '00:00'}}</view>
+          </picker>
+      </view>
+
+      <view class="input-group row-between">
+        <text class="label">每天重复</text>
+        <switch checked="{{editingSchedule.isDaily}}" bindchange="onRepeatChange" color="#4CD964"/>
+      </view>
+
+      <view class="input-group row-between" wx:if="{{editingSchedule.isDaily}}">
+          <text class="label">结束日期</text>
+          <picker mode="date" value="{{editingSchedule.endDate}}" bindchange="onEndDateChange">
+              <view class="picker-view">{{editingSchedule.endDate || '请选择日期'}}</view>
+          </picker>
+      </view>
+
+      <view class="input-group row-between" wx:if="{{isEditing}}">
+        <text class="label">完成状态</text>
+        <switch checked="{{editingSchedule.finish}}" bindchange="onScheduleFinishChange" color="#4CD964"/>
+      </view>
+
+    </view>
+    <view class="modal-footer">
+      <view class="btn delete-btn" wx:if="{{isEditing}}" bindtap="onDeleteSchedule">删除</view>
+      <view class="btn cancel-btn" wx:if="{{!isEditing}}" bindtap="onCloseScheduleModal">取消</view>
+      <view class="btn save-btn" bindtap="onSaveSchedule">保存</view>
+    </view>
+  </view>
+</view>
+<fall-warning show="{{true}}"></fall-warning>

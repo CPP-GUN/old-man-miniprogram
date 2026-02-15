@@ -1,0 +1,10 @@
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/boot-splash.svg" alt="" />
+  </view>
+  <view class="container">
+    <view class="title-container">
+      <text class="title">Keiki</text>
+    </view>
+  </view>
+</scroll-view>

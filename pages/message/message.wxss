@@ -1,0 +1,273 @@
+page {
+  height: var(--tab-bar-height);
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollarea {
+  height: 100%;
+}
+
+.tab-page-content {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.background-container {
+  width: 100%;
+  height: 100%;
+  display: initial;
+  position: fixed;
+  z-index: -1;
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.message-list {
+  padding: 0;
+}
+
+.bottom-btn-container {
+  width: 580rpx;
+  margin-left: 85rpx;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  margin-top: 7px;
+  bottom: calc(env(safe-area-inset-bottom) + 17px + 5px + 50px);
+  z-index: 101; /* Higher than mask (100) */
+  padding: 0;
+}
+
+.btn-shadow-layer {
+  position: absolute;
+  top: 10rpx;
+  left: 20rpx;
+  right: 20rpx;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  filter: blur(15px);
+  opacity: 0; /* Hidden by default */
+  border-radius: 50rpx;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+.record-btn {
+  width: 100% !important;
+  height: 100%;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 50rpx;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: visible;
+}
+
+.record-btn::after {
+  border: none;
+}
+
+.record-btn.hover {
+  transform: scale(0.96);
+  background-color: #f9f9f9;
+}
+
+.record-btn.recording {
+  background: linear-gradient(135deg, #fd7c7c, #e96464);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(238, 82, 83, 0.4);
+  transform: scale(1); /* Reset scale or keep slightly smaller */
+}
+
+/* Show shadow layer only when recording */
+.bottom-btn-container:has(.recording) .btn-shadow-layer {
+  background: var(--red-color-light);
+  opacity: 0.4;
+}
+
+.btn-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+  opacity: 0.6;
+  filter: invert(1) brightness(0); /* Make icon black by default */
+}
+
+.record-btn.recording .btn-icon {
+  opacity: 1;
+  filter: none; /* Revert to original (white) when recording */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.recording-mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(3px);
+}
+
+/* Recording HUD */
+.recording-hud {
+  width: 300rpx;
+  height: 300rpx;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.2s;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.2);
+}
+
+.recording-hud.canceling {
+  background-color: var(--red-color-light); /* Red for cancel */
+  transform: scale(1.05);
+}
+
+/* Wave Animation */
+.wave-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  height: 60rpx;
+  margin-bottom: 20rpx;
+}
+
+.wave-bar {
+  width: 8rpx;
+  background: #fff;
+  border-radius: 4rpx;
+  animation: wave 0.8s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(1) { height: 20rpx; animation-delay: 0s; }
+.wave-bar:nth-child(2) { height: 35rpx; animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { height: 50rpx; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { height: 35rpx; animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { height: 20rpx; animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 100% { height: 15rpx; opacity: 0.5; }
+  50% { height: 50rpx; opacity: 1; }
+}
+
+/* Text Styles */
+.duration-text {
+  font-size: 48rpx;
+  font-weight: 600;
+  font-family: 'PingFang SC', sans-serif;
+  letter-spacing: 2rpx;
+  margin-bottom: 20rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.hint-container {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  transition: all 0.3s;
+}
+
+.hint-container.warning-bg {
+  background-color: var(--red-color-light);
+  animation: pulse-bg 0.5s infinite;
+}
+
+@keyframes pulse-bg {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.hint-text {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hint-text.warning {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Canceling State Styles */
+.icon-wrapper {
+  width: 100rpx;
+  height: 100rpx;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.cancel-icon-large {
+  width: 50rpx;
+  height: 50rpx;
+  /* Icon is black by default or use filter if needed */
+}
+
+.hud-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  letter-spacing: 1rpx;
+}
+
+/* Button Canceling State */
+.record-btn.canceling {
+  background: #e5e5e5;
+  color: #999;
+  box-shadow: none;
+  transform: scale(0.95);
+  border: none;
+}
+
+.record-btn.canceling .btn-icon {
+  filter: invert(0.7);
+  animation: none;
+}

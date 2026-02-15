@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'PingFangSC';
+  src: local('/assets/fonts/PingFangSC-Regular.woff');
+}
+
+page {
+  --title-color: #40afd8;
+  --main-color: #7daff2;
+  --main-color-light: #F3F8FF;
+  --main-color-deep: #6295d9;
+  --main-text-color: #4b4e50;
+  --note-color: #c5cbd3;
+  --note-color-deep: #8d9497;
+  --green-color: #29b764;
+  --red-color: #ea4a4a;
+  --red-color-light: #e96464;
+  --orange-color: #fba52b;
+  --tab-bar-height: calc(100% - env(safe-area-inset-bottom) - 17px - 5px - 40px);
+  color: var(--main-text-color);
+  font-family: ('PingFangSC', sans-serif) !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,29 @@
+<view class="background-container">
+  <image class="background-img" src="/assets/img/main-background-3.png" alt="" />
+</view>
+
+<view class="nav" style="width: {{navRight}}px;">
+  <view class="status-bar-placeholder" style="height:calc({{statusBarHeight}}px);"></view>
+  <view class="nav-content-container" style="height:calc({{navBarHeight}}px)">
+    <view class="nav-icon-container" bind:tap="onBackBtnTap" hover-class="hover">
+      <image class="nav-icon" src="/assets/img/left-arrow.svg" mode="" />
+    </view>
+    <view class="nav-title-container">
+      <text>系统通知</text>
+    </view>
+  </view>
+</view>
+
+<scroll-view class="scrollarea" scroll-y type="list" 
+  refresher-enabled="{{true}}" 
+  refresher-triggered="{{isRefreshing}}" 
+  bindrefresherrefresh="onRefresherRefresh">
+  <view class="container">
+    <view class="notice-list">
+      <block wx:for="{{noticeList}}" wx:key="id">
+        <notice-area item="{{item}}"></notice-area>
+      </block>
+      <view class="no-more">没有更多通知了~</view>
+    </view>
+  </view>
+</scroll-view>

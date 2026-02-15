@@ -1,0 +1,630 @@
+page {
+  height: calc(100% - env(safe-area-inset-bottom) - 17px - 5px - 38px);
+  display: flex;
+  flex-direction: column;
+  --battery-border: url('data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMTIyIiBoZWlnaHQ9IjQ5IiB2aWV3Qm94PSIwIDAgMTIyIDQ5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMTEzLjg1MSIgaGVpZ2h0PSI0Ni4wNzQxIiByeD0iOSIgZmlsbD0id2hpdGUiIHN0cm9rZT0idXJsKCNwYWludDBfbGluZWFyXzBfMSkiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNMTIyIDIyLjk2NzZDMTIyIDI1LjYyMjYgMTIwLjYyMiAyNy43NzUgMTE4LjkyNCAyNy43NzVDMTE4LjkyNCAyNC43NzAzIDExOC45MjQgMjUuNjIyNiAxMTguOTI0IDIyLjk2NzZDMTE4LjkyNCAyMC4zMTI1IDExOC45MjQgMjAuODY0MyAxMTguOTI0IDE4LjE2MDJDMTIwLjYyMiAxOC4xNjAyIDEyMiAyMC4zMTI1IDEyMiAyMi45Njc2WiIgZmlsbD0iI0YwRjlCRiIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzBfMSIgeDE9IjIzMi4yMTUiIHkxPSItNDUuNDAzMyIgeDI9Ii0xMi4wNzI4IiB5Mj0iNDEuNTE3MiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjRkZGM0FFIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0UyRkZDRiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=');
+  --switch-border: url('data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iMjMiIHZpZXdCb3g9IjAgMCA1MCAyMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iNDkuMjc5MyIgeT0iMjIuNSIgd2lkdGg9IjQ5LjA1IiBoZWlnaHQ9IjIyIiByeD0iMTEiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA0OS4yNzkzIDIyLjUpIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfMF8xKSIgZmlsbC1vcGFjaXR5PSIwLjIxIi8+CjxnIGZpbHRlcj0idXJsKCNmaWx0ZXIwX2RfMF8xKSI+CjxyZWN0IHdpZHRoPSI0Mi41MSIgaGVpZ2h0PSIxNiIgcng9IjgiIHRyYW5zZm9ybT0ibWF0cml4KC0xIDAgMCAxIDQ2LjAwOTggMy41KSIgZmlsbD0id2hpdGUiLz4KPHJlY3QgeD0iLTAuNSIgeT0iMC41IiB3aWR0aD0iNDEuNTEiIGhlaWdodD0iMTUiIHJ4PSI3LjUiIHRyYW5zZm9ybT0ibWF0cml4KC0xIDAgMCAxIDQ1LjAwOTggMy41KSIgc3Ryb2tlPSJ1cmwoI3BhaW50MV9saW5lYXJfMF8xKSIvPgo8L2c+CjxkZWZzPgo8ZmlsdGVyIGlkPSJmaWx0ZXIwX2RfMF8xIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDkuNTA5OCIgaGVpZ2h0PSIyMyIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlQWxwaGEiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAxMjcgMCIgcmVzdWx0PSJoYXJkQWxwaGEiLz4KPGZlT2Zmc2V0Lz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMS43NSIvPgo8ZmVDb21wb3NpdGUgaW4yPSJoYXJkQWxwaGEiIG9wZXJhdG9yPSJvdXQiLz4KPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMC43NDAzODUgMCAwIDAgMCAwLjg1Mzk2NiAwIDAgMCAwIDEgMCAwIDAgMC41NCAwIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93XzBfMSIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvd18wXzEiIHJlc3VsdD0ic2hhcGUiLz4KPC9maWx0ZXI+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8wXzEiIHgxPSIxMjEuMjE5IiB5MT0iNDIuNSIgeDI9IjY5Ljc0NTciIHkyPSIxNC40NDY5IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM3REFGRjIiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjREVFQ0ZGIi8+CjwvbGluZWFyR3JhZGllbnQ+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQxX2xpbmVhcl8wXzEiIHgxPSI0Mi41MSIgeTE9IjgiIHgyPSIwIiB5Mj0iOCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjRUNGNEZEIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K');
+}
+
+.scrollarea {
+  height: 100%;
+}
+
+.container {
+  padding: 0 40rpx;
+}
+
+.background-container {
+  width: 100%;
+  height: 100%;
+  display: initial;
+  position: fixed;
+  z-index: -1;
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-container {
+  padding: 10rpx 20px;
+  padding-bottom: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 4px 15.6px rgba(59, 57, 104, 0.07);
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.card-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  transition: all .2s;
+}
+
+.card-title {
+  font-size: 18px;
+  color: var(--main-text-color);
+}
+
+.base-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0;
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #ffffffb9;
+  display: flex;
+  justify-content: center;
+  gap: 50rpx;
+}
+
+.avatar-container {
+  background-image: var(--avatar-border);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-image {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
+  z-index: 1;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20rpx;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.info-label {
+  white-space: nowrap;
+}
+
+.info-value {
+  white-space: normal;
+}
+
+.info-content-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-name-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-container {
+  padding: 20px 0;
+}
+
+.info-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.change-account-btn-container {
+  margin-left: 15rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #F3F8FF;
+  padding: 0 10rpx;
+  border-radius: 5px;
+  gap: 5px;
+  transition: all .3s;
+}
+
+.change-account-btn-container.hover {
+  background-color: #e6effd;
+}
+
+.change-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.change-icon-text {
+  font-size: 11px;
+  color: var(--main-color);
+}
+
+.health-container {
+  margin-top: 10px;
+}
+
+.status-image { 
+  width: 100%;
+  scale: 1.05;
+  height: 334rpx;
+  margin-top: 20px;
+}
+
+.card-title-btn {
+  padding: 8px 25rpx;
+  background-image: linear-gradient(to right, #5AEF81, #59DE95);
+  color: #fff;
+  border-radius: 5px;
+  font-size: 11px;
+  transition: all .3s;
+}
+
+.card-title-btn.hover {
+  background-image: linear-gradient(to right, #76EB95, #35C787);
+}
+
+.health-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 40rpx;
+}
+
+.health-col {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  font-size: 13px;
+  gap: 10px;
+}
+
+.health-label {
+  color: var(--note-color-deep);
+}
+
+.health-btn-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25rpx;
+  margin-top: 20px;
+}
+
+.health-btn {
+  background-color: #F3F8FF;
+  color: var(--main-color-deep);
+  padding: 8px 25rpx;
+  border-radius: 5px;
+  transition: all .3s;
+  font-size: 14px;
+}
+
+.health-btn.hover {
+  background-color: #e6effd;
+}
+.setting-container {
+  padding: 20px 15rpx !important;
+}
+
+.setting-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: all .3s;
+  padding: 4px 15rpx;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.setting-item.hover {
+  background-color: #f6f6f6;
+}
+
+.setting-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 10rpx;
+  gap: 16rpx;
+}
+
+.setting-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.setting-arrow {
+  width: 14px;
+  height: 14px;
+}
+
+.bottom-placeholder {
+  width: 100%;
+  height: 20px;
+}
+
+.changeAccountContainer {
+  background-color: #fff;
+  width: 100%;
+  padding: 0 40rpx calc(env(safe-area-inset-bottom) + 100px);
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 40rpx;
+  box-sizing: border-box;
+  overflow: hidden; /* 防止高度变小时内容溢出 */
+}
+
+.drag-handle-area {
+  width: 100%;
+  height: 60rpx; /* 增大触摸区域 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /* 防止被压缩 */
+}
+
+.drag-handle {
+  width: 80rpx;
+  height: 8rpx;
+  background-color: #E0E0E0;
+  border-radius: 10rpx;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  padding: 0 10rpx;
+  margin-top: -10rpx; /* 调整因增加handle区域带来的间距 */
+}
+
+.modal-title {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #333;
+}
+
+/* Medical History Styles */
+.medical-history-container {
+  background-color: #faf9f9;
+  width: 100%;
+  height: 80vh; /* Occupy significant height */
+  padding: 40px 40rpx calc(env(safe-area-inset-bottom) + 62px);
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.medical-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px 30rpx;
+  margin-bottom: 20px;
+}
+
+.medical-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  margin-top: 0;
+}
+
+.medical-history-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.history-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.tags-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.tag {
+  background-color: #F3F8FF;
+  color: var(--main-color-deep);
+  padding: 10rpx 30rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+}
+
+.medical-plus-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.surgery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.surgery-card {
+  background-color: #F9F9F9;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+
+.surgery-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+  font-size: 26rpx;
+}
+
+.surgery-row:last-child {
+  margin-bottom: 0;
+}
+
+.surgery-label {
+  color: #999;
+}
+
+.surgery-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.surgery-card-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F3F8FF;
+  border: 1px dashed var(--main-color);
+}
+
+.surgery-card-add .surgery-row {
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.surgery-card-add .surgery-label {
+  color: var(--main-color-deep);
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.surgery-card-add .surgery-value {
+  color: #999;
+  font-size: 22rpx;
+}
+
+/* Modal Styles */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  width: 600rpx;
+  background-color: #fff;
+  border-radius: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.2);
+  animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  padding: 0 30rpx 30rpx 15px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-content {
+  padding: 40rpx 30rpx;
+}
+
+.input-group {
+  margin-bottom: 30rpx;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.input {
+  width: 100%;
+  height: 80rpx;
+  background-color: #f5f7fa;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #eee;
+}
+
+.btn {
+  flex: 1;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.cancel-btn {
+  color: #999;
+  border-right: 1rpx solid #eee;
+}
+
+.delete-btn {
+  color: #FF3B30;
+  border-right: 1rpx solid #eee;
+}
+
+.save-btn {
+  color: var(--main-color);
+  font-weight: 600;
+}
+
+.btn:active {
+  background-color: #f9f9f9;
+}
+
+.modal-subtitle {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  background-color: #F7F8FA;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover {
+  transform: scale(0.98);
+  background-color: #F0F2F5;
+}
+
+.primary-card {
+  background-color: #F0F6FF; /* 浅蓝色背景 */
+}
+
+.primary-card .card-icon-box {
+  background-color: #fff;
+}
+
+.primary-card .card-title {
+  color: var(--main-color);
+}
+
+.card-icon-box {
+  width: 88rpx;
+  height: 88rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+}
+
+.card-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.card-arrow {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 4rpx solid #CCC;
+  border-right: 4rpx solid #CCC;
+  transform: rotate(45deg);
+  margin-left: 10rpx;
+}
+
+.surgery-card-add {
+  background-color: #F8FBFF;
+  padding: 20px 24rpx;
+}
+
+.surgery-card-add .surgery-row {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.surgery-card-add .surgery-label {
+  color: var(--main-color);
+  font-size: 16px;
+}
+
+.surgery-card-add .surgery-value {
+  color: #BDCFE8;
+}

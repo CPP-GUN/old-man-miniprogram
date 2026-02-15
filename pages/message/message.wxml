@@ -1,0 +1,54 @@
+<view class="scrollarea">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/main-background-3.png" alt="" />
+  </view>
+  <view class="container">
+    <view class="recording-mask" style="display: {{isRecording ? 'flex' : 'none'}};">
+      <!-- Canceling State HUD -->
+      <view class="recording-hud canceling" wx:if="{{isCanceling}}">
+        <view class="icon-wrapper">
+            <image class="cancel-icon-large" src="/assets/img/close.svg" />
+        </view>
+        <text class="hud-title">松开取消</text>
+      </view>
+
+      <!-- Recording State HUD -->
+      <view class="recording-hud" wx:else>
+        <view class="wave-container">
+            <view class="wave-bar"></view>
+            <view class="wave-bar"></view>
+            <view class="wave-bar"></view>
+            <view class="wave-bar"></view>
+            <view class="wave-bar"></view>
+        </view>
+        <text class="duration-text">{{recordDuration}}″</text>
+        <view class="hint-container {{showRecordHint ? 'warning-bg' : ''}}">
+            <text class="hint-text" wx:if="{{!showRecordHint}}">上滑取消</text>
+            <text class="hint-text warning" wx:else>还剩 {{60 - recordDuration}} 秒</text>
+        </view>
+      </view>
+    </view>
+    <nav autoPadding="{{true}}"></nav>
+    <scroll-view class="message-container" 
+      scroll-into-view="{{lastMessageId}}" 
+      enable-passive="{{true}}" 
+      refresher-enabled="{{true}}" 
+      refresher-triggered="{{isRefreshing}}"
+      bindrefresherrefresh="onRefresherRefresh"
+      scroll-y 
+      type="list" 
+      style="width: 100%; height: calc(100vh - {{navHeight}}px - env(safe-area-inset-bottom) - 17px - 5px - 40px - 85px);white-space: nowrap;">
+      <view class="message-list">
+        <chat id="chatComponent" bind:onLoadSuccess="scrollToBottom"></chat>
+        <view class="bottom-placeholder" id="bottom-placeholder"></view>
+      </view>
+    </scroll-view>
+    <view class="bottom-btn-container">
+      <view class="btn-shadow-layer"></view>
+      <button class="record-btn {{isRecording ? 'recording' : ''}} {{isCanceling ? 'canceling' : ''}}" hover-class="hover" bindtouchstart="onRecordBtnTap" bindtouchmove="onRecordBtnMove" bindtouchend="onRecordBtnEndTap">
+        <image class="btn-icon" src="/assets/img/sound-wave.svg" mode="aspectFit" />
+        <text>{{isCanceling ? '松开 取消' : (isRecording ? '松开 发送' : '按住 说话')}}</text>
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+<!--components/notice-area/notice-area.wxml-->
+<view class="notice-item">
+  <view class="notice-time">{{item.time}}</view>
+  <view class="notice-card alert-card">
+    <view class="card-header">
+      <view class="icon-box">
+        <image class="alert-icon" src="/assets/img/alert.png" mode="aspectFit" wx:if="{{false}}"></image> <!-- Placeholder for icon if needed, using CSS shape for now -->
+        <view class="alert-symbol">!</view>
+      </view>
+      <view class="notice-title">{{item.title}}</view>
+    </view>
+    <view class="notice-content">
+      <text>{{item.content}}</text>
+    </view>
+  </view>
+</view>

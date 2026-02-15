@@ -1,0 +1,34 @@
+<view class="chat-container">
+  <block wx:for="{{messageData}}" wx:for-item="item" wx:key="index">
+    <!-- 时间显示 -->
+    <view class="message-time" wx:if="{{item.showTime}}">
+      <text>{{item.time}}</text>
+    </view>
+
+    <!-- 消息主体 -->
+    <view class="message-body {{item.sender === 'self' ? 'self' : 'other'}}" id="{{item.isLastMessage}}">
+      <!-- 头像 -->
+      <view class="avatar-container">
+        <text class="avatar-text">{{item.avatar}}</text>
+      </view>
+
+      <!-- 消息内容区域 -->
+      <view class="content-wrapper">
+        <!-- 气泡 -->
+        <view class="bubble {{item.type}}" hover-class="hover" bindlongpress="onMessageLongPress" data-item="{{item}}" data-index="{{index}}">
+          <block wx:if="{{item.type == 'text'}}">
+            <text class="message-text">{{item.content}}</text>
+          </block>
+          
+          <block wx:if="{{item.type == 'voice'}}">
+            <view class="voice-content" hover-class="hover" style="width: {{80 + item.voiceLength / 60 * 230}}rpx;" catch:tap="onVoiceMsgTap" data-source="{{item.voiceSource}}" data-index="{{index}}">
+              <text class="voice-duration" wx:if="{{item.sender === 'self'}}">{{item.voiceLength}}″</text>
+              <image class="sound-wave-icon {{item.sender === 'self' ? 'rotate-180' : ''}} {{playingMsgIndex === index ? 'playing' : ''}}" src="/assets/img/sound-wave.svg" />
+              <text class="voice-duration" wx:if="{{item.sender === 'other'}}">{{item.voiceLength}}″</text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

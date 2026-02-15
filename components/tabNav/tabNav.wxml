@@ -1,0 +1,14 @@
+<view class="nav {{autoPadding ? 'autoPadding' : ''}}" style="width: {{navRight}}px;">
+  <view class="status-bar-placeholder" style="height:calc({{statusBarHeight}}px + 5px);"></view>
+  <view class="nav-icons-container" style="height:calc({{navBarHeight}}px)">
+    <view class="icon message-icon" hover-class="hover">
+      <image class="nav-icon" src="/assets/img/opera.svg" mode="aspectFill" bind:tap="onOperaBtnTap" />
+    </view>
+    <view class="icon robot-icon" hover-class="hover">
+      <image class="nav-icon" src="/assets/img/robot.svg" mode="aspectFill" bind:tap="onRobotBtnTap" />
+      <view class="message-num">
+        <text>{{robotNum}}</text>
+      </view>
+    </view>
+  </view>
+</view>

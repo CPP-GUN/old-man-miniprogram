@@ -1,0 +1,22 @@
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="background-container">
+    <image class="background-img" src="/assets/img/boot-splash.svg" alt="" />
+  </view>
+  <view class="container {{fade}}">
+    <view class="title-container">
+      <text class="title">Keiki</text>
+    </view>
+    <view class="login-form">
+      <button class="form-btn login-btn {{isChecked ? 'active' : ''}}" hover-class="hover" bind:tap="onLoginBtnTap">微信授权登录</button>
+      <view class="service-check-box">
+        <checkbox-group bindchange="onCheckboxChange">
+          <checkbox checked="{{isChecked}}" />
+        </checkbox-group>
+        <text>我已阅读并同意</text><a href="">《隐私协议》</a><text>和</text><a href="">《用户协议》</a>
+      </view>
+      <view class="login-hint">
+        <text>未注册的账号将自动创建新账号</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

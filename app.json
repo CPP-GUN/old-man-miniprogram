@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/bootSplash/bootSplash",
+    "pages/index/index",
+    "pages/login/login",
+    "pages/entertainment/entertainment",
+    "pages/care/care",
+    "pages/user/user",
+    "pages/message/message",
+    "pages/notice/notice"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#4b4e50",
+    "selectedColor": "#007aff",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/img/home.png",
+        "selectedIconPath": "assets/img/home-active.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "对话",
+        "iconPath": "assets/img/message.png",
+        "selectedIconPath": "assets/img/message-active.png"
+      },
+      {
+        "pagePath": "pages/care/care",
+        "text": "关怀",
+        "iconPath": "assets/img/care.png",
+        "selectedIconPath": "assets/img/care-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "assets/img/user.png",
+        "selectedIconPath": "assets/img/user.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "exparser",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {}
+}
